@@ -1,0 +1,12 @@
+# We will use this Dockerfile for Cloud and Kubernetes Environment
+# Dependency Resolution Stage:
+    FROM python:3.12 as requirements-stage
+    LABEL maintainer="rehman_ismail"
+    WORKDIR /code
+    RUN pip install poetry
+    COPY ./pyproject.toml ./poetry.lock* /code/
+    COPY ./app /code/app
+    # We will comment COPY .env /code/ later 
+    
+    EXPOSE 8000
+    CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
